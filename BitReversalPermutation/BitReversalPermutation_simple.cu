@@ -9,7 +9,7 @@
 #define THR_PER_BL 8
 #define BL_PER_GR 32
 
-__global__ void kernel(int* D, int* Q, int bits) {
+__global__ void kernel(int* D, int* Q, int bits){
 
    // Find index
    int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -19,7 +19,7 @@ __global__ void kernel(int* D, int* Q, int bits) {
    int shifted_left = shifted_right;
 
    // Perform bit reversal permutation
-   for (int a = 1; a < bits; a++)
+   for(int a = 1; a < bits; a++)
       {
          shifted_right >>= 1;
          shifted_left <<= 1;
@@ -42,14 +42,14 @@ int main(int argc, char** argv){
 
    // Allocate the memory on the CPU
    D = (int*)malloc(N * sizeof(int));
-   if (D == NULL) { printf("Allocation failure"); }
+   if(D == NULL) printf("Allocation failure");
 
    // Allocate the memory on the CPU
    Q = (int*)malloc(N * sizeof(int));
-   if (Q == NULL) { printf("Allocation failure"); }
+   if(Q == NULL) printf("Allocation failure");
 
    // printf("INPUT\n");
-   for (int i = 0; i < N; i++)
+   for(int i = 0; i < N; i++)
       {
          D[i] = rand() % 100;
          Q[i] = 0;
@@ -79,7 +79,7 @@ int main(int argc, char** argv){
 
    /* Print results - optional
    printf("RESULT\n");
-   for (int i = 0; i < N; i++)
+   for(int i = 0; i < N; i++)
       {
          // Print the final values - optional
          printf("The number %d is: ", i);
