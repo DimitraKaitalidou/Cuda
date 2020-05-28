@@ -8,8 +8,8 @@
 #define THR_PER_BL 8
 #define BL_PER_GR 32
 
-__global__ void kernel1(int* D, int* q, int b) {
-	
+__global__ void kernel1(int* D, int* q, int b){
+
    int i = threadIdx.x + b * THR_PER_BL;
    int j = threadIdx.y + b * THR_PER_BL;
 
@@ -21,7 +21,7 @@ __global__ void kernel1(int* D, int* q, int b) {
          e = D[k * N + j];
 
          __syncthreads();
-            
+
          if(d > f + e)
             {
                D[i * N + j] = f + e;
@@ -30,13 +30,13 @@ __global__ void kernel1(int* D, int* q, int b) {
       }
 }
 
-__global__ void kernel2(int* D, int* q, int b) {
+__global__ void kernel2(int* D, int* q, int b){
 
    int i, j;
-   if (blockIdx.y == 0)
+   if(blockIdx.y == 0)
       {
          j = b * blockDim.y + threadIdx.y;
-         if (blockIdx.x >= b)
+         if(blockIdx.x >= b)
             {
                i = (blockIdx.x + 1) * blockDim.x + threadIdx.x;
             }
@@ -48,7 +48,7 @@ __global__ void kernel2(int* D, int* q, int b) {
    else
       {
          i = b * blockDim.y + threadIdx.y;
-         if (blockIdx.x >= b)
+         if(blockIdx.x >= b)
             {
                j = (blockIdx.x + 1) * blockDim.x + threadIdx.x;
             }
@@ -64,10 +64,10 @@ __global__ void kernel2(int* D, int* q, int b) {
          d = D[i * N + j];
          f = D[i * N + k];
          e = D[k * N + j];
-         
+
          __syncthreads();
-         
-         if (d > f + e)
+
+         if(d > f + e)
             {
                D[i * N + j] = f + e;
                q[i * N + j] = k;
@@ -75,7 +75,7 @@ __global__ void kernel2(int* D, int* q, int b) {
       }
 }
 
-__global__ void kernel3(int* D, int* q, int b) {
+__global__ void kernel3(int* D, int* q, int b){
 
    int i, j;
 
@@ -124,16 +124,16 @@ int main(int argc, char** argv){
 
    // Allocate the memory on the CPU
    D = (int**)malloc(N * sizeof(int*));
-   if(D == NULL) { printf("Allocation failure"); }
+   if(D == NULL) printf("Allocation failure");
    for(int i = 0; i < N; i++)
       {
          D[i] = (int*)malloc(N * sizeof(int));
-         if(D[i] == NULL) { printf("Allocation failure"); }
+         if(D[i] == NULL) printf("Allocation failure");
       }
    d = (int*)malloc(N * N * sizeof(int));
-   if(d == NULL) { printf("Allocation failure"); }
+   if(d == NULL) printf("Allocation failure");
    q = (int*)malloc(N * N * sizeof(int));
-   if(q == NULL) { printf("Allocation failure"); }
+   if(q == NULL) printf("Allocation failure");
 
    // Fill the arrays 'd' on the CPU
    for(int i = 0; i < N; i++)
@@ -190,13 +190,13 @@ int main(int argc, char** argv){
 
    /* // Print results - optional
    printf("The smallest distances are:\n");
-   for (int i = 0; i < N * N; i++)
+   for(int i = 0; i < N * N; i++)
       {
          printf("%d\n", d[i]);
       }
 
    printf("The intermediate nodes are:\n");
-   for (int i = 0; i < N * N; i++)
+   for(int i = 0; i < N * N; i++)
       {
          printf("%d\n", q[i]);
       }
