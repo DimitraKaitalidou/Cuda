@@ -72,11 +72,10 @@ The kernel<<...>>(...) is executed N times, according to Demo A.
 
 ## Complex implementation
 
-The implementation in stages is more complex. It is used in the FFT algorithm. Specically, FFT divides the time signal of N elements into N signals of one element. The division is done according to 
-the Demo B. The procedure is as follows:
+The implementation in stages is more complex. It is used in the FFT algorithm. Specically, FFT divides the time signal of N elements into N signals of one element. The division is done according to Demo B. The procedure is as follows:
 - The elements whose position is even number are placed in the group on the left and the elements whose position is odd number are placed in the group on the right 
 - Then, the array is split in half and the same procedure it repeated, until N signals of one element are created
-- As shown in the Demo B, the elements are placed in the desired position one stage before the end
+- As shown in Demo B, the elements are placed in the desired position one stage before the end
 
 The CPU implementation is the same as in the simple implementation. But the GPU implementation is different, because the complex implementation utilizes 2 kernels. 
 Specifically,
